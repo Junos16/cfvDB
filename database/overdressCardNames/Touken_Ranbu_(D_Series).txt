@@ -1,4 +1,5 @@
 Akita_Toushirou
+Akita_Toushirou
 Atsushi_Toushirou
 Gokotai
 Gotou_Toushirou
@@ -25,6 +26,7 @@ Shinano_Toushirou
 Yagen_Toushirou
 Yamanbagiri_Kunihiro
 Yamanbagiri_Kunihiro_Shinken_Hissatsu
+Aizen_Kunitoshi
 Aizen_Kunitoshi
 Aizen_Kunitoshi_Kiwame
 Akita_Toushirou_Kiwame
@@ -78,6 +80,7 @@ Urashima_Kotetsu
 Urashima_Kotetsu_Kiwame
 Yagen_Toushirou_Kiwame
 Yamanbagiri_Kunihiro_Sentou
+Akashi_Kuniyuki
 Akashi_Kuniyuki
 Akashi_Kuniyuki_Kiwame
 Azuki_Nagamitsu
@@ -159,6 +162,7 @@ Yamanbagiri_Chougi
 Yamanbagiri_Kunihiro_Toku
 Yamabushi_Kunihiro
 Yamabushi_Kunihiro_Kiwame
+Hachisuka_Kotetsu_Kiwame
 Hachisuka_Kotetsu_Kiwame
 Hachisuka_Kotetsu_Kiwame_Sentou
 Hotarumaru

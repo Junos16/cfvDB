@@ -1,4 +1,5 @@
 Battle_of_the_Abyss
+Battle_of_the_Abyss
 The_"Strongest"_by_Nature
 Brunhilde
 Fighting_Each_Other_is_the_Battle_of_Men
@@ -15,6 +16,7 @@ The_Long-Awaited_Encounter_(God)
 The_Long-Awaited_Encounter_(Man_and_Valkyrie)
 Thor
 Zeus
+Adopted_Son_of_Miyamoto_Musashi,_Miyamoto_Iori
 Adopted_Son_of_Miyamoto_Musashi,_Miyamoto_Iori
 Apprentice_Valkyrie,_Göll
 Cheering_Second_Son,_Abel
@@ -46,6 +48,7 @@ Wishing_for_Man's_Victory,_Göll
 With_its_Master,_Red_Hare
 You_Loser,_Poseidon
 All-out_Mode,_Thor
+All-out_Mode,_Thor
 Almighty_God,_Zeus
 Appeared_True_Character,_Poseidon
 Boiling_Fighting_Spirit,_Shiva
@@ -71,6 +74,7 @@ The_Most_Fearsome_God_of_Greek_Myth,_Poseidon
 The_Strongest_Nordic_God,_Thunder_God_Thor
 Now_in_His_Prime,_Kojiro_Sasaki
 Vigilant,_Brunhilde
+Berserker_of_Thunder,_Thor
 Berserker_of_Thunder,_Thor
 China's_Strongest_Hero,_Lü_Bu
 Father_of_All_Humanity,_Adam

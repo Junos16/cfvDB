@@ -1,4 +1,5 @@
 Black_Jaguar,_Chocolove
+Black_Jaguar,_Chocolove
 Cheer_Up!_Kororo
 Deep_Emotion!_Bason
 Unyielding_Battle,_Bason
@@ -41,6 +42,7 @@ Burning_Outrage,_Spirit_of_Fire
 Spiritual_State,_Spirit_of_Fire
 Water_Fire,_Spirit_of_Fire
 A_Dream_Shared_with_Her_Brother,_Pirica
+A_Dream_Shared_with_Her_Brother,_Pirica
 Ancestor_Soul_of_the_Tao_Family
 Are_We_Doing_This?_"Wooden_Sword"_Ryu
 Beloved_Wife,_Eliza
@@ -71,6 +73,7 @@ Shikigami,_Goki
 Shikigami,_Zenki
 Together_with_the_Jaguar's_Soul,_Chocolove
 Warlord_Serving_the_Tao_Family,_Bason
+Apex_Shugenja,_Mikihisa_Asakura
 Apex_Shugenja,_Mikihisa_Asakura
 Big_Dreams_to_Fulfill,_Horohoro
 By_the_Eternal_Heavens_and_Earth,_Tao_Ren
@@ -103,6 +106,7 @@ Team_The_Ren
 The_Battle_Aiming_to_be_the_Shaman_King
 The_Man_with_Abundant_Sympathy,_Wooden_Sword_Ryu
 X-LAWS,_Marco
+Archangel,_Michael
 Archangel,_Michael
 Calcium_Giant
 Eternal_Traveler,_Wooden_Sword_Ryu

@@ -1,4 +1,5 @@
 Abyss_Temptation
+Abyss_Temptation
 Alchemic_Hedgehog
 Announcing_Wind_of_Spring,_Corphie
 Aspiring_Maiden,_Alana
@@ -42,6 +43,7 @@ The_King_of_Beetles,_Mushiking
 Wild_Intelligence
 will+Dress_Season2_Urara_Haneyama
 Zypsophilia_Fairy,_Asher
+Abundance_Fairy
 Abundance_Fairy
 Adhesive_Thread_Mutant,_Actiasticky
 Awakening_from_Slumber,_Rorowa
@@ -157,6 +159,7 @@ Viewpre_Stinger
 Wave_Crest_Brave_Shooter
 Wheel_Assault
 Yield_Elf
+Aggress_Blue_Dragon
 Aggress_Blue_Dragon
 Archaeology_Scholar,_Ante_Ealter
 Ascendance_Assault
@@ -277,6 +280,7 @@ Wandering_Loyalty
 Water_Potential_Brave_Shooter
 Wild-fire_Brave_Shooter
 Advance_of_Great_Cause
+Advance_of_Great_Cause
 Agogik_Dragon
 Ascertain_Dragon
 Astute_Noble,_Eddga
@@ -307,7 +311,6 @@ Giraffe_Stag_Beetle
 Grand_March_of_Full_Bloom,_Lianorn
 Grief,_Despair,_and_Rejection
 Groovy_Dragon
-Guardian_of_Twilight,_Leogaldea
 Happy_Dreaming_Festa!
 Hercules_Beetle
 Hydrolic_Ram_Dragon
@@ -351,7 +354,9 @@ Sympathize_dB
 Teasing_Spiritualist,_Zorga_Masques
 The_Quintessential_Quintuplets,_Itsuki_Nakano
 Thriving_Dragon
+Twilight_Protector,_Lioguardia
 Undoubting_Flame_Sword,_Radylina
 Wails_Melt_in_the_Sound_of_Rain
 Yearnful_Flower_Maiden,_Florence
+Sylvan_Horned_Beast_Emperor,_Magnolia_Elder
 Sylvan_Horned_Beast_Emperor,_Magnolia_Elder
