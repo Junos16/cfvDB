@@ -51,6 +51,30 @@ def combineEffects(effectList):
     combinedEffects.append(current_string)
     return combinedEffects
 
+def getSets(inputList):
+    setList = []
+
+    for string in inputList:
+        parts = string.split(" - ")
+
+        if len(parts) >= 2:
+            for part in parts[1:]:
+                setList.append(part)
+
+    return setList
+
+def labelFlavors(flavorList):
+    flavorDict = {}
+    for string in flavorList:
+        parts = string.split(':', 1)
+        
+        if len(parts) == 2:
+            key = parts[0][1:-1]
+            value = parts[1].strip()
+            flavorDict[key] = value
+    
+    return flavorDict
+
 response = requests.get(url = quote_page + 'Vampire_Princess_of_Night_Fog,_Nightrose')
 soup = BeautifulSoup(response.content, 'html.parser')
 
@@ -60,15 +84,17 @@ table = [x.text.strip() for x in table]
 # need to remove names of sets from codes
 sets = soup.find(class_ = 'sets').findChildren('li')
 sets = [x.text.strip() for x in sets]
+sets = getSets(sets)
+print(sets)
 
 # need to associate each flavor text with the code
-flavor = list(soup.find(class_ = 'flavor').find('td').stripped_strings)
+temp_flavor = list(soup.find(class_ = 'flavor').find('td').stripped_strings)
+flavor = labelFlavors(temp_flavor)
 #print(flavor)
 
 # need to split the effects with tags, but also for heal effect and ot effect
 effects = list(soup.find(class_ = 'effect').find('td').stripped_strings)
-print(combineEffects(effects))
-#print(effects)
+effects = combineEffects(effects)
 
 tStatus = soup.find(class_ = 'tourneystatus').findChildren('td')
 tStatus = [x.text.strip() for x in tStatus]
