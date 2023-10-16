@@ -7,7 +7,7 @@ quote_page = 'https://cardfight.fandom.com/wiki/'
 
 nations_old = ['United_Sanctuary', 'Dragon_Empire', 'Star_Gate', 'Dark_Zone', 'Magallanica', 'Zoo']
 nations_new = ['Dragon_Empire', 'Dark_States', 'Brandt_Gate', 'Keter_Sanctuary', 'Stoicheia', 'Lyrical_Monasterio', 
-               'Touken_Ranbu', 'Monster_Strike', 'SHAMAN_KING', 'Record_of_Ragnarok', 'BanG_Dream!']
+               'Touken_Ranbu_(D_Series)', 'Monster_Strike', 'SHAMAN_KING', 'Record_of_Ragnarok', 'BanG_Dream!']
 clans = ['Royal_Paladin', 'Shadow_Paladin' 'Gold_Paladin' 'Oracle_Think_Tank' 'Angel_Feather', 'Genesis', 
          'Kagero', 'Narukami', 'Tachikaze', 'Nubatama', 'Murakumo', 
          'Nova_Grappler', 'Dimension_Police', 'Etranger', 'Link_Joker', 'The_Mask_Collection', 'Union_Verse', 'Animation', 'Game', 
@@ -18,23 +18,25 @@ clans = ['Royal_Paladin', 'Shadow_Paladin' 'Gold_Paladin' 'Oracle_Think_Tank' 'A
          'Cray_Elemental', 'Hololive', 
          'BREAKERZ', 'TachiVan']
 
-'''
+
 # finding list of cards from a page like Dragon Empire
-response = requests.get(url = quote_page + nations_new[0])
+response = requests.get(url = quote_page + nations_new[6])
 soup = BeautifulSoup(response.content, 'html.parser')
-table = soup.find(id = 'List_of_Dragon_Empire_cards').parent.find_next_sibling('table')
+print(soup.find(id = 'List_of_Touken_Ranbu_Cards'))
+'''
+table = soup.find(id = 'List_of_Touken_Ranbu_Cards').parent.find_next_sibling('table')
 data = table.find_all_next('tr')
 
-Dragon_Empire1 = []
-Dragon_Empire = []
+temp = []
+final = []
 for td in data[0].find_all_next('td'):
-    Dragon_Empire1.append(td.text.strip())
+    temp.append(td.text.strip())
 
-for i in range(len(Dragon_Empire1)):
-    if (i%3==0): Dragon_Empire.append(Dragon_Empire1[i])
+for i in range(len(temp)):
+    if (i%3==0): final.append(temp[i])
 
-print(Dragon_Empire)
-'''
+#print(final)
+
 def combineEffects(effectList):
     combinedEffects = []
     delimiter_list = ['[CONT]', '[AUTO]', '[ACT]']
@@ -115,3 +117,4 @@ for ele in tableEle:
     else:
         mainInfo.append(None)
 #print(mainInfo)
+'''
