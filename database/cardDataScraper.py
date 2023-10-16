@@ -6,12 +6,12 @@ quote_page = 'https://cardfight.fandom.com/wiki/'
 
 def combineEffects(effectList):
     combinedEffects = []
-    delimiter_list = ['[CONT]', '[AUTO]', '[ACT]']
+    delimiter_list = ['[CONT]', '[AUTO]', '[ACT]'] # more delimiters for heal, ot etc.
     current_string = ''
 
     for string in effectList:
         reset = 0 
-        if any(string.startswith(delimiter) for delimiter in delimiter_list):
+        if any(string.startswith(delimiter) for delimiter in delimiter_list): # how would i deal with effects that contain delimiters in them?
             if reset:
                 combinedEffects.append(current_string)
                 current_string = ''
@@ -20,23 +20,31 @@ def combineEffects(effectList):
                 current_string += ' ' + string
 
     return combinedEffects
-    
+
 def getCardData(cardName):
     response = requests.get(url = quote_page + cardName)
     soup = BeautifulSoup(response.content, 'html.parser')
 
     table = soup.find(class_ = 'info-main').findChildren('td')
     table = [x.text.strip() for x in table]
-
+    
+    mainInfo = []
+    for ele in tableEle:
+        if ele in table:
+            temp = table.index(ele)
+            mainInfo.append(table[temp+1])
+        else:
+            mainInfo.append(None)
+    #print(mainInfo)
+    
     # need to remove names of sets from codes
     sets = soup.find(class_ = 'sets').findChildren('li')
     sets = [x.text.strip() for x in sets]
 
     # need to associate each flavor text with the code
     flavor = list(soup.find(class_ = 'flavor').find('td').stripped_strings)
-    #print(flavor)
+    print(flavor)
 
-    # need to split the effects with tags, but also for heal effect and ot effect
     effects = list(soup.find(class_ = 'effect').find('td').stripped_strings)
     effects = combineEffects(effects)
     print(effects)
@@ -52,11 +60,3 @@ def getCardData(cardName):
             'Nation', 'Clan', 'Trigger Effect', 'Race', 'Format', 'Illust'] 
     extraEle = ['sets', 'flavors', 'effects', 'tourneyStatus', 'images']
 
-    mainInfo = []
-    for ele in tableEle:
-        if ele in table:
-            temp = table.index(ele)
-            mainInfo.append(table[temp+1])
-        else:
-            mainInfo.append(None)
-    #print(mainInfo)
