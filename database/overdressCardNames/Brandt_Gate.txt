@@ -1,4 +1,5 @@
 Aberrant_Gleam_Dragon
+Aberrant_Gleam_Dragon
 Alterate_Sphere_Dragon
 Ameliorate_Connector
 Analysis_Thrashing,_Brightrim
@@ -35,6 +36,7 @@ Vital_Charger,_Lizary
 Waving_Hand_of_Vacuum_Discharge
 Whistling_Arrow_of_Recursion,_Obifold
 will+Dress_Season2_Samuel_Fredson
+AiD_9-V
 AiD_9-V
 Adhesive_Monster,_Nelbetron
 Ambitious_Fist_Dragon,_Ellembers_Dragon
@@ -149,6 +151,7 @@ Torrential_Energy_Research
 Useful_Recharger
 Violate_Dragon
 White_Jeweled_Beast,_Synthetica
+Absage_Adler
 Absage_Adler
 Aiding_Monster,_Tectien
 Ala_Dargente
@@ -273,6 +276,7 @@ Twin_Press_Smasher
 Versatile_Assembler
 Windstorm_Monster,_Cyclogaade
 Abent_Robust
+Abent_Robust
 Alert_Guard_Gunner
 Alter_Ego_Messiah
 Anomalous_Pulsar_Dragon
@@ -336,6 +340,7 @@ Tourus_Varcum
 Twisting_Bulldoze
 Volcano_Monster,_Goukaterra
 Volheimer_Dragon
+Aurora_Fierce_Princess,_Seraph_Purelight
 Aurora_Fierce_Princess,_Seraph_Purelight
 Genesis_Dragon,_Amnesty_Messiah
 Genesis_Dragon,_Excelics_Messiah

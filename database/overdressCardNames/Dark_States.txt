@@ -1,4 +1,5 @@
 Advanced_Clock_Dragon
+Advanced_Clock_Dragon
 Almajestar,_Pypis゠Mulchie
 Brilliant_Floral,_Uania
 Caper_Companion
@@ -40,6 +41,7 @@ will+Dress_Season2_Danji_Momoyama
 will+Dress_Season2_Michiru_Hazama
 will+Dress_Season2_Sophie_Belle
 Wire-pull_Subjugater
+Abrupt_Leaver
 Abrupt_Leaver
 Acrobat_Presenter
 Airam_Capricornus
@@ -162,6 +164,7 @@ Vilnies_Chimaera
 Violet_Blue_Illusory_Butterfly,_Huanju
 Wise_Demonic_Lordling,_Vapula
 Almajestar,_Turan゠Dyna
+Almajestar,_Turan゠Dyna
 Allurement_Gazer,_Realoof
 Amazement_Magician
 Amazing_Frost
@@ -273,6 +276,7 @@ Ultrasound_Sirie
 Unfathomable_Juggler
 Upstream_Dragon
 Almajest_Celesphere
+Almajest_Celesphere
 Almajestar,_Astroea゠Unica
 Approaching_Fangs,_Kheios
 Attract_Inverse
@@ -351,6 +355,7 @@ Truculence_Raider
 Unbreakable_Ice_Pillar,_Jebinna
 Upward_Acrobat,_Marjorie
 Xeno_Almajestar,_Astroea゠Bico_Masques
+Chronodragon_Nextage
 Chronodragon_Nextage
 Demonic_Jewel_True_Dragon,_Drajeweled_Ignis
 Diabolos,_"Unrivaled"_Bruce

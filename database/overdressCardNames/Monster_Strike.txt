@@ -1,4 +1,5 @@
 Abyssal_"Tuner",_Abyss
+Abyssal_"Tuner",_Abyss
 Beast_Deity,_Godstriker_Extreme
 Bringer_of_Light,_Lucifer
 Challenge_to_the_Heavens
@@ -29,6 +30,7 @@ Twisted_Emotions
 Twisted_Severences
 Witch_of_the_Brilliant_Banquet,_Walpurgis
 Agriculture_Goddess_of_the_Illuminating_Underworld,_Persephone
+Agriculture_Goddess_of_the_Illuminating_Underworld,_Persephone
 Angel_of_Romance_and_Agreeableness,_Mana
 Awakened_Savior,_Miroku
 Ballad_of_Madness,_Serenade
@@ -54,6 +56,7 @@ Soul-inviting_Guide_of_the_Swamp,_Teynemosir
 Spy_with_a_Thousand_Faces,_Nyarlathotep
 Sweet_Dream_Chocola
 Watcher_of_the_Abyss,_Helheim
+Phantom_Thief,_Arsene:_Phantom_Mode
 Phantom_Thief,_Arsene:_Phantom_Mode
 Bewitching_Dream,_Succubus
 Blade_Deity_of_Reincarnation,_Mikazuki_Munechika
@@ -85,6 +88,7 @@ Spectacular_Guardian_of_the_Paradise,_Gabriel
 Spirit_of_the_Elegant_Flower_Nation,_Plumeria
 Unbroken_Ruler_of_Troubles,_Avici
 Unique_Detective,_Sherlock_Holmes
+Absolutely_Invincible_Great_King_of_Terror,_Nostradamus
 Absolutely_Invincible_Great_King_of_Terror,_Nostradamus
 Benevolent_Goddess_of_the_Universe,_Benzaiten
 Best_Rock_Band_of_the_Cosmos,_Wicked_Pistols

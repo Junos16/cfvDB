@@ -1,5 +1,5 @@
 import requests
-import pandas as pd
+import re
 from bs4 import BeautifulSoup 
 
 quote_page = 'https://cardfight.fandom.com/wiki/'
@@ -11,34 +11,31 @@ def getCardNames(nation):
     response = requests.get(url = quote_page + nation)
     soup = BeautifulSoup(response.content, 'html.parser')
 
-    dSeries = '_(D_Series)'
+    ID = 'List'
 
-    if dSeries in nation:
-        ID = 'List_of_' + nation[:-11] +'_Cards'
-    else:
-        ID = 'List_of_' + nation + '_cards'
-
-    table = soup.find(id = ID).parent.find_next_sibling('table')
-    #print(table)
-    data = table.find_all_next('tr')
-    print(data)
-    '''temp = []
-    final = []
-
-    for td in data[0].find_all_next('td'):
-        temp.append(td.text.strip().replace(' ', '_'))
-
-    for i in range(len(temp)):
-        if (i%3==0): final.append(temp[i])
-
-    return(final)'''
-getCardNames(nations[4])
-
-'''for nation in nations:
-    cardNames = getCardNames(nation)
-
-    with open(f'database/overdressCardNames/{nation}.txt', 'w', encoding='utf-8') as curFile:
-        for item in cardNames:
-            curFile.write(f"{item}\n")
+    tables = soup.find(id = re.compile(ID)).parent.find_next_siblings('table')
     
-    curFile.close()'''
+    names = []
+
+    for table in tables:
+        rows = table.findChildren('tr')
+        for row in rows:
+            td = row.find_next('td')
+            names.append(td.text.replace(' ', '_'))    
+    
+    return(names)
+
+for nation in nations:
+    print(nation)
+    try:
+        cardNames = getCardNames(nation)
+
+        with open(f'database/overdressCardNames/{nation}.txt', 'w', encoding='utf-8') as curFile:
+            for item in cardNames:
+                curFile.write(f"{item}\n")
+    
+        curFile.close()
+
+    except:
+        print('exception')
+        continue

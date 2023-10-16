@@ -33,7 +33,6 @@ def getCardNames(clan):
 
     tables = soup.find(id = re.compile(ID)).parent.find_next_siblings('table')
     tables = tables[:-1]
-    print(tables[-1])
     
     names = []
 

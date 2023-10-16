@@ -1,4 +1,5 @@
 Accumulation_Sage
+Accumulation_Sage
 Affectionate_Harp_Angel
 Arcmya
 Bard_of_Heavenly_Song,_Alpacc
@@ -41,6 +42,7 @@ White_Fang_Witch,_Disma
 will+Dress_Season2_Raika_Koshiba
 will+Dress_Season2_Tohya_Ebata
 Youth_Following_in_Footsteps,_Youth
+Additional_Angel
 Additional_Angel
 Advancement_Magic,_Melcoco
 Aegismare_Dragon
@@ -148,6 +150,7 @@ Witch_of_Revocation,_Fectil
 Yellgaon
 Yellow_Jeweled_Beast,_Tolpaz
 Academic_of_Verification,_Piric
+Academic_of_Verification,_Piric
 Ampoule_Scatterer_Angel
 Atrocious?_Moth_Girl,_Maple
 Blaster_Blade
@@ -250,6 +253,7 @@ Witch_of_Extinguishment,_Fergosa
 Witch_of_Moon_Rabbits,_Rubinia
 Witch_of_Ravens,_Chamomile
 Yearnful_Magic,_Esunono
+Actual_Analyst,_Kokabiel
 Actual_Analyst,_Kokabiel
 Apex_Ruler,_Bastion
 Big_Snake_Witch,_Solaria
@@ -357,4 +361,5 @@ Youthberk_"RevolForm:_Gust"
 Youthberk_"RevolForm:_Tempest"
 Youthberk_"RevolForm:_Zest"
 Youthberk_"Skyfall_Arms"
+Apex-surpassing_Sword,_Bastion_Prime
 Apex-surpassing_Sword,_Bastion_Prime

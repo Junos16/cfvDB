@@ -1,4 +1,5 @@
 Blaze_Fist_Monk,_Nikko
+Blaze_Fist_Monk,_Nikko
 Blaze_Maiden,_Arush
 Blaze_Maiden,_Parama
 Blaze_Maiden,_Reony
@@ -37,6 +38,7 @@ Trickmoon
 Trickstar
 White_Light_Dragon,_Parasolace
 will+Dress_Season2_Yu-yu_Kondo
+Acute_Dragon,_Eoraphas
 Acute_Dragon,_Eoraphas
 Actress_in_Incognito,_Ichika_Nakano
 Angled_Shot_of_Dust_Storm,_Alastair
@@ -149,6 +151,7 @@ Whip_Dragon,_Whippersaurus
 Wild_Bullet_of_Dust_Storm,_Clifton
 Winged_Dragon,_Cannonadeptero
 Winged_Dragon,_Pursueptera
+A_Serious_Fight!
 A_Serious_Fight!
 Ardor_Hatchet_Dragon
 Ambush_Killsmoke
@@ -266,6 +269,7 @@ Vairina_Erger
 Wilderness_Dragon
 World-shaper_Stealth_Rogue,_Shojodoji
 A_Wish_Upon_the_Moon
+A_Wish_Upon_the_Moon
 Blaze_Fist_Monk,_Damari
 Blaze_Battle_Monk,_Koukan
 Blaze_Fist_Monk,_Gyoukou
@@ -341,5 +345,6 @@ Volcanicgun_Dragon
 Wastelander_Dragon
 Will-o-wisp_Daybreak,_Tamayura
 Wind_of_the_Apocalypse
+Chakrabarthi_True_Dragon,_Mahar_Nirvana
 Chakrabarthi_True_Dragon,_Mahar_Nirvana
 Vairina_Esperaridea
