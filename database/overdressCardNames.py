@@ -19,9 +19,10 @@ def getCardNames(nation):
         ID = 'List_of_' + nation + '_cards'
 
     table = soup.find(id = ID).parent.find_next_sibling('table')
+    #print(table)
     data = table.find_all_next('tr')
-
-    temp = []
+    print(data)
+    '''temp = []
     final = []
 
     for td in data[0].find_all_next('td'):
@@ -30,13 +31,14 @@ def getCardNames(nation):
     for i in range(len(temp)):
         if (i%3==0): final.append(temp[i])
 
-    return(final)
+    return(final)'''
+getCardNames(nations[4])
 
-for nation in nations:
+'''for nation in nations:
     cardNames = getCardNames(nation)
 
     with open(f'database/overdressCardNames/{nation}.txt', 'w', encoding='utf-8') as curFile:
         for item in cardNames:
             curFile.write(f"{item}\n")
     
-    curFile.close()
+    curFile.close()'''
