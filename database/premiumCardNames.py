@@ -38,25 +38,8 @@ def getCardNames(clan):
 
     for table in tables:
         rows = table.findChildren('tr')
-        print(rows)
         for row in rows:
             td = row.find_next('td')
             names.append(td.text.replace(' ', '_'))
 
     return(names)
-
-for clan in clans:
-    print(clan)
-    try:
-        print('trying')
-        cardNames = getCardNames(clan)
-
-        with open(f'database/premiumCardNames/{clan}.txt', 'w', encoding='utf-8') as curFile:
-            for item in cardNames:
-                curFile.write(f"{item}\n")
-    
-        curFile.close()
-    
-    except:
-        print('exception')
-        continue

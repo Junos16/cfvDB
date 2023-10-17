@@ -1,6 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-import pandas as pd
 
 quote_page = 'https://cardfight.fandom.com/wiki/'
 
@@ -79,7 +78,7 @@ def getCardData(cardName):
     sets = soup.find(class_ = 'sets').findChildren('li')
     sets = [x.text.strip() for x in sets]
     sets = getSets(sets)
-    print(sets)
+    #print(sets)
 
     flavor = list(soup.find(class_ = 'flavor').find('td').stripped_strings)
     #print(flavor)
