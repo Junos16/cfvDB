@@ -2,7 +2,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 
-def getCardNames(category):
+def getCardList(category):
     quote_page = 'https://cardfight.fandom.com/wiki/'
 
     response = requests.get(url = quote_page + category)
