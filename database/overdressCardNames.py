@@ -24,18 +24,3 @@ def getCardNames(nation):
             names.append(td.text.replace(' ', '_'))    
     
     return(names)
-
-for nation in nations:
-    print(nation)
-    try:
-        cardNames = getCardNames(nation)
-
-        with open(f'database/overdressCardNames/{nation}.txt', 'w', encoding='utf-8') as curFile:
-            for item in cardNames:
-                curFile.write(f"{item}\n")
-    
-        curFile.close()
-
-    except:
-        print('exception')
-        continue

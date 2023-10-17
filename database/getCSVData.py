@@ -1,8 +1,9 @@
-import requests
-import re 
-from bs4 import BeautifulSoup
+import pandas as pd
+import getCardList
+import cardDataScraper
 
-quote_page = 'https://cardfight.fandom.com/wiki/'
+nations = ['Dragon_Empire', 'Dark_States', 'Brandt_Gate', 'Keter_Sanctuary', 'Stoicheia', 'Lyrical_Monasterio', 
+               'Touken_Ranbu_(D_Series)', 'Monster_Strike', 'SHAMAN_KING', 'Record_of_Ragnarok', 'BanG_Dream!_(D_Series)']
 
 vSeries = '_(V_Series)'
 
@@ -22,24 +23,24 @@ for clan in temp_clans:
     clans.append(clan)
     clans.append(clan + vSeries)
 
-#print(clans)
+terms = nations + clans
 
-def getCardNames(clan):
+def getAllData(category):
+    tempList = []
+
+    cardNames = getCardList.getCardList(category)
+    #print(cardNames)
+    for name in cardNames:
+        try:
+            tempList.append(cardDataScraper.getCardData(name))
+        except:
+            print(name)
+    return(tempList)
+
+print(getAllData('Shadow_Paladin'))
     
-    response = requests.get(url = quote_page + clan)
-    soup = BeautifulSoup(response.content, 'html.parser')
+'''dataList = []
+for term in terms:
+    dataList += getCSVCardLists(term)
 
-    ID = 'List'
-
-    tables = soup.find(id = re.compile(ID)).parent.find_next_siblings('table')
-    tables = tables[:-1]
-    
-    names = []
-
-    for table in tables:
-        rows = table.findChildren('tr')
-        for row in rows:
-            td = row.find_next('td')
-            names.append(td.text.replace(' ', '_'))
-
-    return(names)
+print(dataList)'''

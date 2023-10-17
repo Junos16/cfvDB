@@ -1,29 +1,36 @@
 import requests
 from bs4 import BeautifulSoup
-import pandas as pd
 
 quote_page = 'https://cardfight.fandom.com/wiki/'
 
 def getMainInfo(table):
-    tableEle = ['Name', 'Card Type', 'Grade / Skill', 'Critical', 'Power', 'Critical', 'Shield', 
+    keyList = ['Name', 'Card Type', 'Grade / Skill', 'Imaginary Gift', 'Power', 'Critical', 'Shield', 
             'Nation', 'Clan', 'Trigger Effect', 'Race', 'Format', 'Illust'] 
     
-    mainInfo = []
+    mainInfo = {}
     
-    for ele in tableEle:
-        if ele in table:
-            temp = table.index(ele)
-            mainInfo.append(table[temp+1])
+    for key in keyList:
+        if key in table:
+            keyIndex = table.index(key)
+            value = table[keyIndex+1]
+            mainInfo[key] = value
         else:
-            mainInfo.append(None)
+            mainInfo[key] = None
     
     return mainInfo
 
 def getSets(inputList):
     setList = []
 
+    for item in inputList:
+        br_tags = item.find_all('br')
+        for br_tag in br_tags:
+            br_tag.replace_with(' - ')
+
+    inputList = [x.text.strip() for x in inputList]
+
     for string in inputList:
-        parts = string.split(" - ")
+        parts = string.split(' - ')
 
         if len(parts) >= 2:
             for part in parts[1:]:
@@ -43,22 +50,20 @@ def labelFlavors(flavorList):
     
     return flavorDict
 
-def combineEffects(effectList):
-    combinedEffects = []
-    delimiter_list = ['[CONT]', '[AUTO]', '[ACT]'] # more delimiters for heal, ot etc.
-    current_string = ''
+def getEffects(tagList):
+    effect_list = []
+    cur_effect = ''
 
-    for string in effectList:
-        reset = 0 
-        if any(string.startswith(delimiter) for delimiter in delimiter_list): # how would i deal with effects that contain delimiters in them?
-            if reset:
-                combinedEffects.append(current_string)
-                current_string = ''
-                reset = 0
-            else:
-                current_string += ' ' + string
-
-    return combinedEffects
+    for tag in tagList:
+        if tag.name == 'br':
+            effect_list.append(cur_effect.strip())
+            cur_effect = ''
+        else:
+            text = tag.get_text().strip().replace('\n', '')
+            cur_effect += text + ' '
+    
+    effect_list.append(cur_effect.strip())
+    return effect_list
 
 def getTourneyStatus(tStatus):
     tourneyStatus = {}
@@ -73,25 +78,27 @@ def getCardData(cardName):
 
     table = soup.find(class_ = 'info-main').findChildren('td')
     table = [x.text.strip() for x in table]
-    mainInfo = getMainInfo(table)
-    #print(mainInfo)
+    cardData = getMainInfo(table)
     
-    sets = soup.find(class_ = 'sets').findChildren('li')
-    sets = [x.text.strip() for x in sets]
-    sets = getSets(sets)
-    print(sets)
+    sets = soup.find(class_ = 'sets').findChildren('li') 
+    cardData['Sets'] = getSets(sets)
+    #print(cardData['Sets'])
 
-    flavor = list(soup.find(class_ = 'flavor').find('td').stripped_strings)
-    #print(flavor)
+    try:
+        flavor = list(soup.find(class_ = 'flavor').find('td').stripped_strings)
+        cardData['Flavor Texts'] = labelFlavors(flavor)
+    except:
+        cardData['Flavor Texts'] = None
 
-    effects = list(soup.find(class_ = 'effect').find('td').stripped_strings)
-    effects = combineEffects(effects)
-    #print(effects)
+    try:
+        effects = list(soup.find(class_ = 'effect').find('td'))
+        cardData['Effects'] = getEffects(effects)
+    except:
+        cardData['Effects'] = None
+        
 
     tStatus = soup.find(class_ = 'tourneystatus').findChildren('td')
     tStatus = [x.text.strip() for x in tStatus]
-    tourneyStatus = getTourneyStatus(tStatus)
-    #print(tourneyStatus)
+    cardData['Tourney Status'] = getTourneyStatus(tStatus)
 
-    extraEle = ['sets', 'flavors', 'effects', 'tourneyStatus', 'images']
-
+    return cardData
