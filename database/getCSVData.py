@@ -1,5 +1,5 @@
 import pandas as pd
-import getCardList
+import cardListScraper
 import cardDataScraper
 
 nations = ['Dragon_Empire', 'Dark_States', 'Brandt_Gate', 'Keter_Sanctuary', 'Stoicheia', 'Lyrical_Monasterio', 
@@ -28,7 +28,7 @@ terms = nations + clans
 def getAllData(category):
     tempList = []
 
-    cardNames = getCardList.getCardList(category)
+    cardNames = cardListScraper.getCardList(category)
     #print(cardNames)
     for name in cardNames:
         try:
