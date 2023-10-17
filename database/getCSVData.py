@@ -23,12 +23,24 @@ for clan in temp_clans:
     clans.append(clan)
     clans.append(clan + vSeries)
 
-def getCSVCardLists(category):
-    terms = nations + clans
-    cardData = []
+terms = nations + clans
 
-    for term in terms:
-        cardNames = getCardList.getCardList(term)
-        for name in cardNames:
+def getAllData(category):
+    tempList = []
 
+    cardNames = getCardList.getCardList(category)
+    #print(cardNames)
+    for name in cardNames:
+        try:
+            tempList.append(cardDataScraper.getCardData(name))
+        except:
+            print(name)
+    return(tempList)
 
+print(getAllData('Shadow_Paladin'))
+    
+'''dataList = []
+for term in terms:
+    dataList += getCSVCardLists(term)
+
+print(dataList)'''

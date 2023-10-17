@@ -84,16 +84,21 @@ def getCardData(cardName):
     cardData['Sets'] = getSets(sets)
     #print(cardData['Sets'])
 
-    flavor = list(soup.find(class_ = 'flavor').find('td').stripped_strings)
-    cardData['Flavor Texts'] = labelFlavors(flavor)
+    try:
+        flavor = list(soup.find(class_ = 'flavor').find('td').stripped_strings)
+        cardData['Flavor Texts'] = labelFlavors(flavor)
+    except:
+        cardData['Flavor Texts'] = None
 
-    effects = list(soup.find(class_ = 'effect').find('td'))
-    cardData['Effects'] = getEffects(effects)
+    try:
+        effects = list(soup.find(class_ = 'effect').find('td'))
+        cardData['Effects'] = getEffects(effects)
+    except:
+        cardData['Effects'] = None
+        
 
     tStatus = soup.find(class_ = 'tourneystatus').findChildren('td')
     tStatus = [x.text.strip() for x in tStatus]
     cardData['Tourney Status'] = getTourneyStatus(tStatus)
 
     return cardData
-
-print(getCardData('Claret_Sword_Dragon'))
