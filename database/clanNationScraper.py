@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 
 quote_page = 'https://cardfight.fandom.com/wiki/'
 
-def premiumClanScraper():
+def clanScraper():
     response = requests.get(url = quote_page + 'clans')
     soup = BeautifulSoup(response.content, 'html.parser')
 
@@ -47,7 +47,7 @@ def premiumClanScraper():
 
     return(clans)
 
-def overdressNationScraper():
+def nationScraper():
     response = requests.get(url = quote_page + 'Nations')
     soup = BeautifulSoup(response.content, 'html.parser')
     
