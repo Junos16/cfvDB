@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 
 quote_page = 'https://cardfight.fandom.com/wiki/'
 
-def premium():
+def premiumClanScraper():
     response = requests.get(url = quote_page + 'clans')
     soup = BeautifulSoup(response.content, 'html.parser')
 
@@ -45,5 +45,20 @@ def premium():
     clans.append(common)
     clans.append(no_nation)
 
+    return(clans)
 
+def overdressNationScraper():
+    response = requests.get(url = quote_page + 'Nations')
+    soup = BeautifulSoup(response.content, 'html.parser')
+    
+    nations = []
+    
+    info = soup.find('div', class_ = 'NavFrame')
+    frames = info.findChildren('div', class_ = 'NavFrame')
 
+    for frame in frames:
+        content = frame.findChild('div', class_ = 'NavContent')
+        temp_nations = [x.text.strip() for x in content.findChildren('a') if x.text.strip() != '']
+        nations.append(temp_nations)
+
+    return(nations)
