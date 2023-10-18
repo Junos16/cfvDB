@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 
 quote_page = 'https://cardfight.fandom.com/wiki/'
 
+# generalize it to not have to use a key list
+# format has issues due to use of icons instead of text, find solution
 def getMainInfo(table):
     keyList = ['Name', 'Card Type', 'Grade / Skill', 'Imaginary Gift', 'Power', 'Critical', 'Shield', 
             'Nation', 'Clan', 'Trigger Effect', 'Race', 'Format', 'Illust'] 
@@ -65,6 +67,7 @@ def getEffects(tagList):
     effect_list.append(cur_effect.strip())
     return effect_list
 
+# restrictions don't register properly as it is an image, figure out a solution
 def getTourneyStatus(tStatus):
     tourneyStatus = {}
     for i in range(0, len(tStatus), 2):

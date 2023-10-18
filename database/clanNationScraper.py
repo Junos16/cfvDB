@@ -3,6 +3,9 @@ from bs4 import BeautifulSoup
 
 quote_page = 'https://cardfight.fandom.com/wiki/'
 
+# add method to get clans according to marker generated https://cardfight.fandom.com/wiki/Template:ClansV
+# maybe redo clans with this https://cardfight.fandom.com/wiki/Template:Clans
+
 def clanScraper():
     response = requests.get(url = quote_page + 'clans')
     soup = BeautifulSoup(response.content, 'html.parser')
@@ -47,6 +50,7 @@ def clanScraper():
 
     return(clans)
 
+# maybe redo nations with this https://cardfight.fandom.com/wiki/Template:Nations
 def nationScraper():
     response = requests.get(url = quote_page + 'Nations')
     soup = BeautifulSoup(response.content, 'html.parser')
