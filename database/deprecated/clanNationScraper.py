@@ -6,6 +6,33 @@ quote_page = 'https://cardfight.fandom.com/wiki/'
 # add method to get clans according to marker generated https://cardfight.fandom.com/wiki/Template:ClansV
 # maybe redo clans with this https://cardfight.fandom.com/wiki/Template:Clans
 
+def markerScraper():
+    response = requests.get(url = quote_page + 'Template:ClansV')
+    soup = BeautifulSoup(response.content, 'html.parser')
+
+    markers = []
+
+    th = soup.find_all('th', class_ = 'navbox-group')
+
+    for tag in th:
+        currentMarker = []
+
+        try:
+            markerName = tag.findChild('a').findNext('a').get('title')
+            currentMarker.append(markerName)
+
+        except:
+            currentMarker.append(tag.text.strip())
+
+        clans = tag.findNext('td').findChildren('a')
+
+        for clan in clans:
+            currentMarker.append(clan.text.strip())
+
+        markers.append(currentMarker)
+
+    return(markers)
+
 def clanScraper():
     response = requests.get(url = quote_page + 'clans')
     soup = BeautifulSoup(response.content, 'html.parser')
