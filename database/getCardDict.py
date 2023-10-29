@@ -16,9 +16,10 @@ def cardDict(card):
 
         text = soup.find('text')
         input_text = str(text)[::-1]
-        card_table = re.search(r'}}(.*?)(elbaTdraC{{|elbaTD{{)', input_text, re.DOTALL)
+        card_table = re.search(r'}}(.*?)(elbaTdraC{{|elbaTD{{|elbaTdrac)', input_text, re.DOTALL)
         card_table_text = card_table.group(1)
         card_table_text = card_table_text[::-1]
+        print(card_table_text)
         card_table_lines = card_table_text.strip().split('\n')
 
         for line in card_table_lines:
@@ -38,9 +39,9 @@ def cardDict(card):
             else:
                 data[key] = value
 
-    except:
+    except Exception as e:
         with open('database/missingcards.txt', 'a+', encoding='utf-8') as file:
-            file.write(card + '\n')
+            file.write(card + ' ' + str(e) + '\n')
         print("get_data error")
         
     return data
