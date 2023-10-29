@@ -7,6 +7,7 @@ def getCardList():
     response = requests.get(url = quote_page)
     soup = BeautifulSoup(response.content, 'html.parser')
 
+    card_list = []
     file = open("database\cardnames.txt", 'w', encoding='utf-8') 
 
     while True:
@@ -15,9 +16,10 @@ def getCardList():
             list_items = div.find_all('li')
             for item in list_items:
                 card_name = item.text.strip()
-                forbidden = ['Category:', 'Gallery:', 'Trivia:', 'Errata:', 'Tips:', 'Rulings:', 'Lores:']
+                forbidden = ['Category:', 'Gallery:', 'Trivia:', 'Errata:', 'Tips:', 'Rulings:', 'Lores:', '(ZERO)']
                 if not any(keyword in card_name for keyword in forbidden) and card_name != '':
                     file.write(card_name + '\n')
+                    card_list.append(card_name)
 
         next_tag = soup.find('a', class_ = 'category-page__pagination-next wds-button wds-is-secondary')
         if not next_tag:
