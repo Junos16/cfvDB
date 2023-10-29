@@ -24,6 +24,7 @@ def process_card(card):
 async def cardDatabase(loop):
     card_list = await get_card_list(loop)
     cards = [card.strip() for card in card_list]
+    cards = cards.sort()
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
         executor.map(process_card, cards)
