@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import asyncio
 import aiohttp
 
-async def process_page(url, card_list, forbidden_keywords):
+async def process_page(url, card_list, forbidden_keywords, loop):
     response = await loop.run_in_executor(None, lambda: requests.get(url))
     soup = BeautifulSoup(response.content, 'html.parser')
     divs = soup.find_all('div', class_='category-page__members-wrapper')
@@ -15,7 +15,7 @@ async def process_page(url, card_list, forbidden_keywords):
                 card_list.add(card_name)
                 print(card_name)
 
-async def get_card_list():
+async def get_card_list(loop):
     base_url = 'https://cardfight.fandom.com'
     initial_url = base_url + '/wiki/Category:Cards'
     card_list = set()
@@ -23,7 +23,7 @@ async def get_card_list():
 
     async with aiohttp.ClientSession() as session:
         while initial_url:
-            await process_page(initial_url, card_list, forbidden_keywords)
+            await process_page(initial_url, card_list, forbidden_keywords, loop)
             response = await loop.run_in_executor(None, lambda: requests.get(initial_url))
             soup = BeautifulSoup(response.content, 'html.parser')
             next_tag = soup.find('a', class_='category-page__pagination-next wds-button wds-is-secondary')
@@ -32,12 +32,10 @@ async def get_card_list():
             else:
                 initial_url = None
 
+    card_list = card_list.sort()
     with open("database/cardnames.txt", 'w', encoding='utf-8') as file:
         for card_name in card_list:
             file.write(card_name + '\n')
 
     return list(card_list)
 
-if __name__ == '__main__':
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(get_card_list())

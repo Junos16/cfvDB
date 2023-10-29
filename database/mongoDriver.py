@@ -19,13 +19,14 @@ def process_card(card):
     except Exception as e:
         print(f"Error processing card {card}: {str(e)}")
 
-async def cardDatabase():
-    card_list = await get_card_list()
+async def cardDatabase(loop):
+    card_list = await get_card_list(loop)
     cards = [card.strip() for card in card_list]
+    cards = cards.sort()
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
         executor.map(process_card, cards)
 
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(cardDatabase())
+    loop.run_until_complete(cardDatabase(loop))

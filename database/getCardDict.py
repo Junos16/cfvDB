@@ -39,6 +39,8 @@ def cardDict(card):
                 data[key] = value
 
     except:
+        with open('database/missingcards.txt', 'a+', encoding='utf-8') as file:
+            file.write(card + '\n')
         print("get_data error")
         
     return data
