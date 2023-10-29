@@ -1,14 +1,7 @@
-import pymongo
 import requests
 import html
 import re
 from bs4 import BeautifulSoup
-import concurrent.futures
-
-client = pymongo.MongoClient('mongodb://localhost:27017')
-cfvDB = client['cfvDB']
-
-Cards = cfvDB['Cards']
 
 def cardDict(card):
     quote_page = 'https://cardfight.fandom.com/wiki/Special:Export/'
@@ -47,20 +40,5 @@ def cardDict(card):
 
     except:
         print("get_data error")
+        
     return data
-
-def cardDatabase():
-    card_list = open('database\cardnames.txt', 'r', encoding = 'utf-8')
-
-    for card in card_list:
-        underscore_card = card.replace(' ', '_')
-        print(underscore_card)
-        data = cardDict(underscore_card)
-        try:
-            query = {'id': data['id']}
-            new_values = {"$set": data}
-            Cards.update_one(query, new_values, upsert=True)
-        except:
-            print('save_data error')
-
-cardDatabase()
