@@ -12,18 +12,18 @@ async def process_page(url, card_list, forbidden_keywords, loop):
         for item in list_items:
             card_name = item.text.strip()
             if not any(keyword in card_name for keyword in forbidden_keywords) and card_name != '':
-                card_list.append(card_name)
+                card_list.add(card_name)
                 print(card_name)
 
 async def get_card_list(loop):
     base_url = 'https://cardfight.fandom.com'
     initial_url = base_url + '/wiki/Category:Cards'
-    card_list = []
+    card_list = set()
     forbidden_keywords = ['Category:', 'Gallery:', 'Trivia:', 'Errata:', 'Tips:', 'Rulings:', 'Lores:', '(ZERO)']
 
     async with aiohttp.ClientSession() as session:
         while initial_url:
-            await process_page(initial_url, card_list, forbidden_keywords,loop)
+            await process_page(initial_url, card_list, forbidden_keywords, loop)
             response = await loop.run_in_executor(None, lambda: requests.get(initial_url))
             soup = BeautifulSoup(response.content, 'html.parser')
             next_tag = soup.find('a', class_='category-page__pagination-next wds-button wds-is-secondary')
@@ -32,9 +32,10 @@ async def get_card_list(loop):
             else:
                 initial_url = None
 
+    card_list = card_list.sort()
     with open("database/cardnames.txt", 'w', encoding='utf-8') as file:
-        for card_name in sorted(card_list):
+        for card_name in card_list:
             file.write(card_name + '\n')
 
-    return sorted(card_list)
+    return list(card_list)
 
