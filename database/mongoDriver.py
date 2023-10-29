@@ -21,8 +21,6 @@ def process_card(card):
         with open('database\missingcardss.txt', 'a+', encoding='utf-8') as file:
             file.write(card + ' ' + str(e) + '\n')
 
-
-
 async def cardDatabase(loop):
     card_list = await get_card_list(loop)
     cards = [card.strip() for card in card_list]
