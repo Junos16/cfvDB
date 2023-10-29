@@ -18,6 +18,8 @@ def process_card(card):
         Cards.update_one(query, new_values, upsert=True)
     except Exception as e:
         print(f"Error processing card {card}: {str(e)}")
+        with open('database\missingcardss.txt', 'a+', encoding='utf-8') as file:
+            file.write(card + ' ' + str(e) + '\n')
 
 async def cardDatabase(loop):
     card_list = await get_card_list(loop)
