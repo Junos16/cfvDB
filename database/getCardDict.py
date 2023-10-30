@@ -8,14 +8,17 @@ async def get_main_info(table):
     for i in range(0, len(table), 2):
         key = table[i]
         value = table[i+1]
+
         if '/' in key:
             key1, key2 = map(str.strip, key.split('/'))
-            value1, value2 = map(str.strip, value.split('/'))
-            mainInfo[key1], mainInfo[key2] = value1, value2
+            if '/' in value:
+                value1, value2 = map(str.strip, value.split('/'))        
+                value1 = int(value1[5:].strip())
+                mainInfo[key1], mainInfo[key2] = value1, value2
+            else:
+                mainInfo[key1] = value
         else:
             mainInfo[key] = value
-
-    mainInfo['Grade'] = mainInfo['Grade'][5:].strip()
 
     format = mainInfo['Format']
     if format != 'Premium':
@@ -143,4 +146,4 @@ def cardDict(card):
 
     return data
 
-print(cardDict('Steam_Maiden,_Entarahna'))
+#print(cardDict('Evil-eye_Vidya_Emperor,_Shiranui_"Rinne"'))

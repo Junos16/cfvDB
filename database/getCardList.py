@@ -34,7 +34,10 @@ async def get_card_list(loop):
 
     with open("database/cardnames.txt", 'w', encoding='utf-8') as file:
         for card_name in sorted(card_list):
-            file.write(card_name + '\n')
+            file.write(card_name.replace(' ', '_') + '\n')
 
     return sorted(card_list)
 
+if __name__ == "__main__":
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(get_card_list(loop))
