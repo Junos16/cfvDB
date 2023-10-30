@@ -85,7 +85,7 @@ def getCardData(cardName):
     
     sets = soup.find(class_ = 'sets').findChildren('li') 
     cardData['Sets'] = getSets(sets)
-    #print(cardData['Sets'])
+    print(cardData['Sets'])
 
     try:
         flavor = list(soup.find(class_ = 'flavor').find('td').stripped_strings)
@@ -105,3 +105,6 @@ def getCardData(cardName):
     cardData['Tourney Status'] = getTourneyStatus(tStatus)
 
     return cardData
+
+
+getCardData('Absolution_Lion_King,_Mithril_Ezel')

@@ -1,47 +1,139 @@
 import requests
-import html
-import re
 from bs4 import BeautifulSoup
 
-def cardDict(card):
-    quote_page = 'https://cardfight.fandom.com/wiki/Special:Export/'
-    response = requests.get(url = quote_page + card)
-    html_content = html.unescape(response.content.decode('utf-8', 'ignore'))
-    soup = BeautifulSoup(html_content, 'lxml')
+def get_main_info(table):
+    mainInfo = {}
 
-    data = {}
-    try:
-        data['title'] = soup.find('title').text
-        data['id'] = soup.find('id').text
+    for i in range(0, len(table), 2):
+        key = table[i]
+        value = table[i+1]
+        if '/' in key:
+            key1, key2 = map(str.strip, key.split('/'))
+            value1, value2 = map(str.strip, value.split('/'))
+            mainInfo[key1], mainInfo[key2] = value1, value2
+        else:
+            mainInfo[key] = value
 
-        text = soup.find('text')
-        input_text = str(text)[::-1]
-        card_table = re.search(r'}}(.*?)(elbaTdraC{{|elbaTD{{|elbaTdrac)', input_text, re.DOTALL)
-        card_table_text = card_table.group(1)
-        card_table_text = card_table_text[::-1]
-        print(card_table_text)
-        card_table_lines = card_table_text.strip().split('\n')
+    mainInfo['Grade'] = mainInfo['Grade'][5:].strip()
 
-        for line in card_table_lines:
-            key, value = map(str.strip, line.split('=', 1))
-            key = key.lstrip('|')
-            value = value.replace('|', ': ')
-            if '<br/>' in value:
-                value_list = [item.strip() for item in value.split('<br/>')]
-                final_value_list = []
-                for item in value_list:
-                    if ' - ' in item:
-                        final_value_list.extend(item.split(' - '))
-                    else:
-                        final_value_list.append(item)
-                
-                data[key] = final_value_list
-            else:
-                data[key] = value
+    format = mainInfo['Format']
+    if format != 'Premium':
+        if 'Standard' in format:
+            add = 'D '
+        else:
+            add = 'V '
 
-    except Exception as e:
-        with open('database/missingcards.txt', 'a+', encoding='utf-8') as file:
-            file.write(card + ' ' + str(e) + '\n')
-        print("get_data error")
+        format = add + format
+        format = list(map(str.strip, format.split('/')))
+    mainInfo['Format'] = format
+
+    return mainInfo
+
+def get_sets(sets):
+    set_dict = {}
+
+    for line in sets:
+        br_tags = line.find_all('br')
+        for br_tag in br_tags:
+            br_tag.replace_with(' - ')
         
+        string_list = line.text.split(' - ')
+        key, value = string_list[0], string_list[1:]
+        set_dict[key] = value
+   
+    return set_dict
+
+def get_flavor_text(flavor):
+    if ':' in flavor:
+        flavorDict = {}
+        for string in flavor:
+            parts = string.split(':', 1)
+            
+            if len(parts) == 2:
+                key = parts[0][1:-1]
+                value = parts[1].strip()
+                flavorDict[key] = value
+
+        return flavorDict
+    else:
+        return flavor
+
+def get_effects(effects):
+    #print(effects)
+    for br_tag in effects.find_all('br'):
+        br_tag.replace_with('|||')
+
+    effect_text = effects.get_text()
+    #print(effect_text)
+    effect_list = [text.strip() for text in effect_text.split('|||')]
+    #print(effect_list)
+    return effect_list
+
+def get_tourney_status(tStatus):
+    keys = [x.text.strip() for x in tStatus[0::2]]
+    values = []
+
+    for i in range(0, len(tStatus), 2):
+        value = tStatus[i+1]
+        #print(value)
+        if value.text.strip() != 'Unrestricted':
+            format_texts = [x.strip() for x in value.get_text().split('/')]
+            restriction_texts = [x['title'] for x in value.findChildren('a')]
+            restriction_dict = dict(zip(format_texts, restriction_texts))
+            values.append(restriction_dict)
+        else:
+            values.append(value.text.strip())
+
+    tourneyStatus = dict(zip(keys, values))
+    return tourneyStatus
+
+def cardDict(card):
+    page = 'https://cardfight.fandom.com/wiki/'
+
+    response = requests.get(url = page + card)
+    soup = BeautifulSoup(response.content, 'html.parser')
+
+    table = soup.find(class_ = 'info-main').findChildren('td')
+    table = [x.text.strip() for x in table]
+    data = get_main_info(table)
+    #print(get_main_info(table))
+
+    try:
+        sets = soup.find(class_ = 'sets').findChildren('li') 
+        data['Sets'] = get_sets(sets)
+        #print(data['Sets'])
+    except:
+        data['sets'] = None
+
+    try:
+        flavor = list(soup.find(class_ = 'flavor').find('td').stripped_strings)
+        data['Flavor Texts'] = get_flavor_text(flavor)
+        #print(data['Flavor Texts'])
+    except:
+        data['Flavor Texts'] = None
+    
+    try:
+        effects = soup.find(class_ = 'effect').find('td')
+        tabber = soup.find(class_ = 'effect').findChild('div', class_ = 'tabber wds-tabber')
+
+        if tabber:
+            keys = [x.text for x in tabber.findChildren('div', class_ = 'wds-tabs__tab-label')]
+            value_tags = tabber.findChild(class_ = 'wds-tabs__wrapper with-bottom-border').find_next_siblings('div')
+            values = [get_effects(x) for x in value_tags]
+            data['Effects'] = dict(zip(keys, values))
+        else:
+            data['Effects'] = get_effects(effects)    
+    except:
+        data['Effects'] = None
+    
+    try:
+        tStatus = soup.find(class_ = 'tourneystatus').findChildren('td')
+        #tStatus = [x.text.strip() for x in tStatus]
+        data['Tourney Status'] = get_tourney_status(tStatus)
+        #print(data['Tourney Status'])
+    except:
+        data['Tourney Status'] = None
+
     return data
+
+print(cardDict('Steam_Maiden,_Entarahna'))
