@@ -1,7 +1,10 @@
 import requests
+import http
+import asyncio
+import aiohttp
 from bs4 import BeautifulSoup
 
-def get_main_info(table):
+async def get_main_info(table):
     mainInfo = {}
 
     for i in range(0, len(table), 2):
@@ -29,7 +32,7 @@ def get_main_info(table):
 
     return mainInfo
 
-def get_sets(sets):
+async def get_sets(sets):
     set_dict = {}
 
     for line in sets:
@@ -43,7 +46,7 @@ def get_sets(sets):
    
     return set_dict
 
-def get_flavor_text(flavor):
+async def get_flavor_text(flavor):
     if ':' in flavor:
         flavorDict = {}
         for string in flavor:
@@ -58,7 +61,7 @@ def get_flavor_text(flavor):
     else:
         return flavor
 
-def get_effects(effects):
+async def get_effects(effects):
     #print(effects)
     for br_tag in effects.find_all('br'):
         br_tag.replace_with('|||')
@@ -69,7 +72,7 @@ def get_effects(effects):
     #print(effect_list)
     return effect_list
 
-def get_tourney_status(tStatus):
+async def get_tourney_status(tStatus):
     keys = [x.text.strip() for x in tStatus[0::2]]
     values = []
 
@@ -87,27 +90,33 @@ def get_tourney_status(tStatus):
     tourneyStatus = dict(zip(keys, values))
     return tourneyStatus
 
-def cardDict(card):
-    page = 'https://cardfight.fandom.com/wiki/'
+async def fetch_page(card):
+    page = 'https://cardfight.fandom.com/wiki/' + card
 
-    response = requests.get(url = page + card)
-    soup = BeautifulSoup(response.content, 'html.parser')
+    async with aiohttp.ClientSession() as session:
+        async with session.get(page) as response:
+            html = await response.text()
+            return html
+
+def cardDict(card):
+    html = asyncio.run(fetch_page(card))
+    soup = BeautifulSoup(html, 'html.parser')
 
     table = soup.find(class_ = 'info-main').findChildren('td')
     table = [x.text.strip() for x in table]
-    data = get_main_info(table)
+    data = asyncio.run(get_main_info(table))
     #print(get_main_info(table))
 
     try:
         sets = soup.find(class_ = 'sets').findChildren('li') 
-        data['Sets'] = get_sets(sets)
+        data['Sets'] = asyncio.run(get_sets(sets))
         #print(data['Sets'])
     except:
         data['sets'] = None
 
     try:
         flavor = list(soup.find(class_ = 'flavor').find('td').stripped_strings)
-        data['Flavor Texts'] = get_flavor_text(flavor)
+        data['Flavor Texts'] = asyncio.run(get_flavor_text(flavor))
         #print(data['Flavor Texts'])
     except:
         data['Flavor Texts'] = None
@@ -119,17 +128,17 @@ def cardDict(card):
         if tabber:
             keys = [x.text for x in tabber.findChildren('div', class_ = 'wds-tabs__tab-label')]
             value_tags = tabber.findChild(class_ = 'wds-tabs__wrapper with-bottom-border').find_next_siblings('div')
-            values = [get_effects(x) for x in value_tags]
+            values = [asyncio.run(get_effects(x)) for x in value_tags]
             data['Effects'] = dict(zip(keys, values))
         else:
-            data['Effects'] = get_effects(effects)    
+            data['Effects'] = asyncio.run(get_effects(effects))  
     except:
         data['Effects'] = None
     
     try:
         tStatus = soup.find(class_ = 'tourneystatus').findChildren('td')
         #tStatus = [x.text.strip() for x in tStatus]
-        data['Tourney Status'] = get_tourney_status(tStatus)
+        data['Tourney Status'] = asyncio.run(get_tourney_status(tStatus))
         #print(data['Tourney Status'])
     except:
         data['Tourney Status'] = None
