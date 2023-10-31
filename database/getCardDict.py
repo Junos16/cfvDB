@@ -1,21 +1,20 @@
 import asyncio
 import aiohttp
+import re
 from bs4 import BeautifulSoup
 
-# fix imaginary gift
-# get wiki links
-# get id
+base_url = 'https://cardfight.fandom.com/wiki/'
+
 # get image links
-# convert power, shield, critical to int
 # griph vartex flavor issue
 # fix individual missing cards
 
-def get_main_info(table):
+def get_main_info(table, card):
     mainInfo = {}
 
     for i in range(0, len(table), 2):
-        key = table[i]
-        value = table[i+1]
+        key = table[i].text.strip()
+        value = table[i+1].text.strip()
 
         if 'Grade' in key:
             key1, key2 = map(str.strip, key.split('/'))
@@ -25,19 +24,31 @@ def get_main_info(table):
                 mainInfo[key1], mainInfo[key2] = value1, value2
             else:
                 mainInfo[key1] = value
+        elif key in ['Power', 'Shield', 'Critical']:
+            value = int(value[:-1]) if '+' in value else int(value)
+            mainInfo[key] = value
+        elif key == 'Imaginary Gift':
+            key = 'Ride'
+            value = table[i+1].findChild('a')['title']
+            mainInfo[key] = value
         else:
             mainInfo[key] = value
 
-    format = mainInfo['Format']
-    if format != 'Premium':
-        if 'Standard' in format:
-            add = 'D '
-        else:
-            add = 'V '
+    if mainInfo['Format'] != 'Premium':
+        add = 'D ' if 'Standard' in mainInfo['Format'] else 'V '
+        mainInfo['Format'] = add + mainInfo['Format']
+        mainInfo['Format'] = list(map(str.strip, mainInfo['Format'].split('/')))
 
-        format = add + format
-        format = list(map(str.strip, format.split('/')))
-    mainInfo['Format'] = format
+    html = asyncio.run(fetch_page('Special:Export/' + card))
+    soup = BeautifulSoup(html, 'lxml')
+    text = soup.find('text').text
+
+    if 'Persona' in text:
+        mainInfo['Ride'] = 'Persona'
+
+    mainInfo['ID'] = soup.find('page').findChild('id').text
+    mainInfo['Title'] = soup.find('page').findChild('title').text
+    mainInfo['Link'] = base_url + card.replace(' ', '_')
 
     return mainInfo
 
@@ -100,7 +111,7 @@ def get_tourney_status(tStatus):
     return tourneyStatus
 
 async def fetch_page(card):
-    page = 'https://cardfight.fandom.com/wiki/' + card
+    page = base_url + card
 
     async with aiohttp.ClientSession() as session:
         async with session.get(page) as response:
@@ -112,8 +123,8 @@ def cardDict(card):
     soup = BeautifulSoup(html, 'html.parser')
 
     table = soup.find(class_ = 'info-main').findChildren('td')
-    table = [x.text.strip() for x in table]
-    data = get_main_info(table)
+    #table = [x.text.strip() for x in table]
+    data = get_main_info(table, card)
     #print(get_main_info(table))
 
     try:
@@ -153,3 +164,6 @@ def cardDict(card):
         data['Tourney Status'] = None
 
     return data
+
+
+print(cardDict('Flagship_Dragon,_Flagburg_Dragon'))
