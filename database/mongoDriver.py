@@ -10,7 +10,7 @@ def process_card(card):
     try:
         print(card)
         data = cardDict(card)
-        query = {'Name': data['Name']}
+        query = {'ID': data['ID']}
         new_values = {"$set": data}
         Cards.update_one(query, new_values, upsert=True)
     except Exception as e:
