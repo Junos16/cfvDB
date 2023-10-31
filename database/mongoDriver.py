@@ -21,8 +21,8 @@ def process_card(card):
 def cardDatabase():
     with open ('database\cardnames.txt', 'r', encoding='utf-8') as file:
         card_list = file.readlines()
-        cards = [card.strip() for card in card_list]
-
+        cards = [card.strip().replace('?', '%3F') for card in card_list]
+        
         with concurrent.futures.ThreadPoolExecutor() as executor:
             executor.map(process_card, cards)
 

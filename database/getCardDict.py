@@ -1,6 +1,4 @@
-import asyncio
-import aiohttp
-import re
+import requests
 from bs4 import BeautifulSoup
 
 base_url = 'https://cardfight.fandom.com/wiki/'
@@ -19,18 +17,25 @@ def get_main_info(table, card):
         if 'Grade' in key:
             key1, key2 = map(str.strip, key.split('/'))
             if '/' in value:
-                value1, value2 = map(str.strip, value.split('/'))        
-                value1 = int(value1[5:].strip())
+                values = list(map(str.strip, value.split('/')))
+                value1 = int(values[0][5:].strip())
+                value2 = values[1:] if len(values) > 2 else values[1]
                 mainInfo[key1], mainInfo[key2] = value1, value2
             else:
                 mainInfo[key1] = value
         elif key in ['Power', 'Shield', 'Critical']:
-            value = int(value[:-1]) if '+' in value else int(value)
-            mainInfo[key] = value
+            if value not in ['N/A', 'None']:
+                value = int(value.replace('+', '').replace(',', ''))
+                mainInfo[key] = value
+            else:
+                mainInfo.pop(key, None)
         elif key == 'Imaginary Gift':
             key = 'Ride'
-            value = table[i+1].findChild('a')['title']
-            mainInfo[key] = value
+            try:
+                value = table[i+1].findChild('a')['title']
+            except:
+                value = None
+            mainInfo[key] = value    
         else:
             mainInfo[key] = value
 
@@ -39,8 +44,8 @@ def get_main_info(table, card):
         mainInfo['Format'] = add + mainInfo['Format']
         mainInfo['Format'] = list(map(str.strip, mainInfo['Format'].split('/')))
 
-    html = asyncio.run(fetch_page('Special:Export/' + card))
-    soup = BeautifulSoup(html, 'lxml')
+    response = requests.get(base_url + 'Special:Export/' + card)
+    soup = BeautifulSoup(response.content, 'lxml')
     text = soup.find('text').text
 
     if 'Persona' in text:
@@ -110,17 +115,11 @@ def get_tourney_status(tStatus):
     tourneyStatus = dict(zip(keys, values))
     return tourneyStatus
 
-async def fetch_page(card):
-    page = base_url + card
-
-    async with aiohttp.ClientSession() as session:
-        async with session.get(page) as response:
-            html = await response.text()
-            return html
-
 def cardDict(card):
-    html = asyncio.run(fetch_page(card))
-    soup = BeautifulSoup(html, 'html.parser')
+    page = base_url + card
+    response = requests.get(page)
+    #html = asyncio.run(fetch_page(card))
+    soup = BeautifulSoup(response.content, 'html.parser')
 
     table = soup.find(class_ = 'info-main').findChildren('td')
     #table = [x.text.strip() for x in table]
@@ -164,6 +163,3 @@ def cardDict(card):
         data['Tourney Status'] = None
 
     return data
-
-
-print(cardDict('Flagship_Dragon,_Flagburg_Dragon'))
