@@ -19,7 +19,7 @@ async def get_card_list(loop):
     base_url = 'https://cardfight.fandom.com'
     initial_url = base_url + '/wiki/Category:Cards'
     card_list = []
-    forbidden_keywords = ['Category:', 'Gallery:', 'Trivia:', 'Errata:', 'Tips:', 'Rulings:', 'Lores:', '(ZERO)']
+    forbidden_keywords = ['Category:', 'Gallery:', 'Trivia:', 'Errata:', 'Tips:', 'Rulings:', 'Lores:', '(ZERO)', 'User:', '_Gallery', 'User_blog:']
 
     async with aiohttp.ClientSession() as session:
         while initial_url:

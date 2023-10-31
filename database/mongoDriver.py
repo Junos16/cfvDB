@@ -4,7 +4,7 @@ from getCardDict import cardDict
 
 client = pymongo.MongoClient('mongodb://localhost:27017')
 cfvDB = client['cfvDB']
-Cards = cfvDB['Cards_New']
+Cards = cfvDB['Cards']
 
 def process_card(card):
     try:

@@ -2,14 +2,22 @@ import asyncio
 import aiohttp
 from bs4 import BeautifulSoup
 
-async def get_main_info(table):
+# fix imaginary gift
+# get wiki links
+# get id
+# get image links
+# convert power, shield, critical to int
+# griph vartex flavor issue
+# fix individual missing cards
+
+def get_main_info(table):
     mainInfo = {}
 
     for i in range(0, len(table), 2):
         key = table[i]
         value = table[i+1]
 
-        if '/' in key:
+        if 'Grade' in key:
             key1, key2 = map(str.strip, key.split('/'))
             if '/' in value:
                 value1, value2 = map(str.strip, value.split('/'))        
@@ -33,7 +41,7 @@ async def get_main_info(table):
 
     return mainInfo
 
-async def get_sets(sets):
+def get_sets(sets):
     set_dict = {}
 
     for line in sets:
@@ -47,7 +55,7 @@ async def get_sets(sets):
    
     return set_dict
 
-async def get_flavor_text(flavor):
+def get_flavor_text(flavor):
     if ':' in flavor:
         flavorDict = {}
         for string in flavor:
@@ -62,7 +70,7 @@ async def get_flavor_text(flavor):
     else:
         return flavor
 
-async def get_effects(effects):
+def get_effects(effects):
     #print(effects)
     for br_tag in effects.find_all('br'):
         br_tag.replace_with('|||')
@@ -73,7 +81,7 @@ async def get_effects(effects):
     #print(effect_list)
     return effect_list
 
-async def get_tourney_status(tStatus):
+def get_tourney_status(tStatus):
     keys = [x.text.strip() for x in tStatus[0::2]]
     values = []
 
@@ -105,19 +113,19 @@ def cardDict(card):
 
     table = soup.find(class_ = 'info-main').findChildren('td')
     table = [x.text.strip() for x in table]
-    data = asyncio.run(get_main_info(table))
+    data = get_main_info(table)
     #print(get_main_info(table))
 
     try:
         sets = soup.find(class_ = 'sets').findChildren('li') 
-        data['Sets'] = asyncio.run(get_sets(sets))
+        data['Sets'] = get_sets(sets)
         #print(data['Sets'])
     except:
         data['sets'] = None
 
     try:
         flavor = list(soup.find(class_ = 'flavor').find('td').stripped_strings)
-        data['Flavor Texts'] = asyncio.run(get_flavor_text(flavor))
+        data['Flavor Texts'] = get_flavor_text(flavor)
         #print(data['Flavor Texts'])
     except:
         data['Flavor Texts'] = None
@@ -129,21 +137,19 @@ def cardDict(card):
         if tabber:
             keys = [x.text for x in tabber.findChildren('div', class_ = 'wds-tabs__tab-label')]
             value_tags = tabber.findChild(class_ = 'wds-tabs__wrapper with-bottom-border').find_next_siblings('div')
-            values = [asyncio.run(get_effects(x)) for x in value_tags]
+            values = [get_effects(x) for x in value_tags]
             data['Effects'] = dict(zip(keys, values))
         else:
-            data['Effects'] = asyncio.run(get_effects(effects))  
+            data['Effects'] = get_effects(effects) 
     except:
         data['Effects'] = None
     
     try:
         tStatus = soup.find(class_ = 'tourneystatus').findChildren('td')
         #tStatus = [x.text.strip() for x in tStatus]
-        data['Tourney Status'] = asyncio.run(get_tourney_status(tStatus))
+        data['Tourney Status'] = get_tourney_status(tStatus)
         #print(data['Tourney Status'])
     except:
         data['Tourney Status'] = None
 
     return data
-
-#print(cardDict('Evil-eye_Vidya_Emperor,_Shiranui_"Rinne"'))
