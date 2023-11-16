@@ -22,7 +22,7 @@ def get_main_info(table, card):
                 value2 = values[1:] if len(values) > 2 else values[1]
                 mainInfo[key1], mainInfo[key2] = value1, value2
             else:
-                mainInfo[key1] = value
+                mainInfo[key1] = int(value[5:].strip())
         elif key in ['Power', 'Shield', 'Critical']:
             if value not in ['N/A', 'None']:
                 value = int(value.replace('+', '').replace(',', ''))
@@ -163,3 +163,5 @@ def cardDict(card):
         data['Tourney Status'] = None
 
     return data
+
+#print(cardDict('Sheltered_Heiress,_Spangled'))
