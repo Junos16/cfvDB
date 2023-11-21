@@ -164,4 +164,4 @@ def cardDict(card):
 
     return data
 
-#print(cardDict('Sheltered_Heiress,_Spangled'))
+print(cardDict('Sheltered_Heiress,_Spangled'))
